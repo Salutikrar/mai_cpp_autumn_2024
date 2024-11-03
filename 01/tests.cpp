@@ -15,24 +15,39 @@ protected:
     }
 };
 
-TEST_F(AllocatorTest, test_usual)
+TEST_F(AllocatorTest, checking_reset)
 {
     Allocator allocator;
     ASSERT_NO_THROW(allocator.makeAllocator(256));
-    ASSERT_NE(allocator.alloc(100), nullptr);
-    ASSERT_NE(allocator.alloc(100), nullptr);
-    ASSERT_EQ(allocator.alloc(100), nullptr);
-    ASSERT_NO_THROW(allocator.makeAllocator(16));
-    char* ptr1 = allocator.alloc(16);
+    char* ptr1 = allocator.alloc(256);
     ASSERT_NE(ptr1, nullptr);
     ASSERT_EQ(allocator.alloc(1), nullptr);
     allocator.reset();
-    char* ptr2 = allocator.alloc(8);
+    char* ptr2 = allocator.alloc(256);
     ASSERT_NE(ptr2, nullptr);
-    char* ptr3 = allocator.alloc(8);
-    ASSERT_NE(ptr3, nullptr);
+    ASSERT_EQ(allocator.alloc(1), nullptr);
     ASSERT_EQ(ptr1, ptr2);
-    ASSERT_NE(ptr1, ptr3);
+}
+
+TEST_F(AllocatorTest, checking_many_makeAlloc)
+{
+    Allocator allocator;
+    ASSERT_NO_THROW(allocator.makeAllocator(256));
+    ASSERT_NE(allocator.alloc(256), nullptr);
+    ASSERT_EQ(allocator.alloc(1), nullptr);
+    ASSERT_NO_THROW(allocator.makeAllocator(16));
+    ASSERT_EQ(allocator.alloc(17), nullptr);
+    ASSERT_NE(allocator.alloc(16), nullptr);
+}
+
+TEST_F(AllocatorTest, checking_alloc)
+{
+    Allocator allocator;
+    ASSERT_NO_THROW(allocator.makeAllocator(2));
+    char* ptr1 = allocator.alloc(1);
+    char* ptr2 = allocator.alloc(1);
+    ASSERT_EQ(allocator.alloc(1), nullptr);
+    ASSERT_NE(ptr1, ptr2);
 }
 
 TEST_F(AllocatorTest, test_bad_alloc)

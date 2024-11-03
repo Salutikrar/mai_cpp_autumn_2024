@@ -2,7 +2,7 @@ CC=g++
 FLAGS=-std=c++20 -Wall -Wextra -Werror -pedantic
 GTEST_FLAGS=-lgtest -lgtest_main -lpthread
 
-all: main tests.o
+all: main tests
 
 main: main.o allocator.o
 	$(CC) $(FLAGS) main.o allocator.o -o main
@@ -13,7 +13,7 @@ main.o: main.cpp allocator.hpp
 allocator.o: allocator.cpp allocator.hpp
 	$(CC) $(FLAGS) allocator.cpp -c
 
-tests.o: allocator.o tests.cpp
+tests: allocator.o tests.cpp
 	$(CC) $(FLAGS) allocator.o tests.cpp -o tests $(GTEST_FLAGS)
 
 test:
