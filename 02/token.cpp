@@ -21,7 +21,7 @@ void TokenParser::SetEndCallback(std::function<void(void)> callback)
 {
     endCallback = callback;
 }
-void TokenParser::SetDigitTokenCallback(std::function<void(const uint64_t&)> callback)
+void TokenParser::SetDigitTokenCallback(std::function<void(const uint64_t)> callback)
 {
     digitTokenCallback = callback;
 }

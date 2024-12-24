@@ -2,7 +2,7 @@ CC=g++
 FLAGS=-std=c++20 -Wall -Wextra -Werror -pedantic
 GTEST_FLAGS=-lgtest -lgtest_main -lpthread
 
-all: tests main libtests.a
+all: libtests.a tests main
 
 main: main.o libtoken.a
 	$(CC) $(FLAGS) main.o -L. -ltoken -o main
@@ -24,4 +24,3 @@ test:
 
 clean:
 	rm -f main tests *.o
-
